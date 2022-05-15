@@ -2,7 +2,7 @@
   <div id="app" class="todoapp">
     <h1>todos</h1>
     <CreateTodo />
-    <Main />
+    <Main v-if="todos.length > 0" />
   </div>
 </template>
 
@@ -10,9 +10,15 @@
 import Vue from "vue";
 import Main from "@/components/main/Main.vue";
 import CreateTodo from "@/components/newTodo/CreateTodo.vue";
+import Todo from "./types/Todo.class";
 
 export default Vue.extend({
   components: { Main, CreateTodo },
+  computed: {
+    todos(): Todo[] {
+      return this.$store.getters.getTodos;
+    },
+  },
 });
 </script>
 
@@ -115,5 +121,12 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.new-todo {
+  padding: 16px 16px 16px 60px;
+  border: none;
+  background: rgba(0, 0, 0, 0.003);
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 </style>
