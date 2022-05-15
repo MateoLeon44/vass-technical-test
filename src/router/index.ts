@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import TodosList from "@/components/todos/TodosList.vue";
 import TodosActive from "@/components/todos/active/TodosActive.vue";
+import TodosCompleted from "@/components/todos/completed/TodosCompleted.vue";
 
 Vue.use(VueRouter);
 
@@ -22,15 +23,11 @@ const routes: Array<RouteConfig> = [
     name: "active",
     component: TodosActive,
   },
-  /*   {
-    path: "/active",
-    name: "active",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import( "../views/AboutView.vue"),
-  }, */
+  {
+    path: Routes.completed,
+    name: "completed",
+    component: TodosCompleted,
+  },
 ];
 
 const router = new VueRouter({
