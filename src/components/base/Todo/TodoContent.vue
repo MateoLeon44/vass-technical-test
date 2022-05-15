@@ -1,15 +1,16 @@
 <template>
-  <label :for="forId" @dblclick="editTodo($event)">
+  <label :for="id" @dblclick="changeEditedTodo">
     {{ content }}
   </label>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { vuexTypes } from "@/store/vuex.types";
 
 export default Vue.extend({
   props: {
-    forId: {
+    id: {
       type: Number,
       required: true,
     },
@@ -19,9 +20,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    editTodo: function (event: any) {
-      event.stopPropagation();
-      event.preventDefault();
+    changeEditedTodo: function () {
+      this.$store.dispatch(vuexTypes.CHANGE_EDITED_TODO, this.id);
     },
   },
 });
