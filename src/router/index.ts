@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import TodosList from "@/components/Todos/TodosList.vue";
+import TodosList from "@/components/todos/TodosList.vue";
 
 Vue.use(VueRouter);
 
