@@ -1,14 +1,17 @@
 <template>
   <div>
     <router-view />
+    <TodoFooter />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import TodoFooter from "@/components/footer/TodoFooter.vue";
 
 export default Vue.extend({
   name: "main-view",
+  components: { TodoFooter },
 });
 </script>
 

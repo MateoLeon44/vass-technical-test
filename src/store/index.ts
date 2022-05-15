@@ -29,6 +29,13 @@ export default new Vuex.Store<State>({
     getEditedTodo(state): EditedTodo {
       return state.editedTodo;
     },
+    getActiveTodos(state): number {
+      let counter = 0;
+      for (const todo of state.todos) {
+        if (!todo.isChecked) counter += 1;
+      }
+      return counter;
+    },
   },
   mutations: {
     [vuexTypes.ADD_TODO](state: State, todo: Todo) {
