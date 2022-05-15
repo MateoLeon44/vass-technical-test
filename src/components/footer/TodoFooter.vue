@@ -1,16 +1,21 @@
 <template>
   <footer class="footer">
     <FooterCounter :counter="countActiveTodos" :suffix="countTodosSuffix" />
+    <FooterCompleted v-if="countCompletedTodos > 0" />
   </footer>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import FooterCounter from "./items/FooterCounter.vue";
+import FooterCompleted from "./items/FooterCompleted.vue";
 
 export default Vue.extend({
-  components: { FooterCounter },
+  components: { FooterCounter, FooterCompleted },
   computed: {
+    countCompletedTodos(): number {
+      return this.$store.getters.getCompletedTodos;
+    },
     countActiveTodos(): number {
       return this.$store.getters.getActiveTodos;
     },

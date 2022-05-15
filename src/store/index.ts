@@ -36,10 +36,23 @@ export default new Vuex.Store<State>({
       }
       return counter;
     },
+    getCompletedTodos(state): number {
+      let counter = 0;
+      for (const todo of state.todos) {
+        if (todo.isChecked) counter += 1;
+      }
+      return counter;
+    },
   },
   mutations: {
     [vuexTypes.ADD_TODO](state: State, todo: Todo) {
       state.todos.push(todo);
+    },
+    [vuexTypes.CLEAR_ACTIVE_TODOS](state: State) {
+      for (let i = 0; i < state.todos.length; i++) {
+        const todo: Todo = state.todos[i];
+        if (todo.isChecked) state.todos.splice(i, 1);
+      }
     },
     [vuexTypes.TOGGLE_TODO_CHECK](state: State, index: number) {
       const todo: Todo = state.todos[index];
@@ -81,6 +94,9 @@ export default new Vuex.Store<State>({
     },
     [vuexTypes.EDIT_TODO](context) {
       context.commit(vuexTypes.EDIT_TODO);
+    },
+    [vuexTypes.CLEAR_ACTIVE_TODOS](context) {
+      context.commit(vuexTypes.CLEAR_ACTIVE_TODOS);
     },
   },
 });
