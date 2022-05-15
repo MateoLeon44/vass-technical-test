@@ -1,8 +1,8 @@
 <template>
-  <p class="todo-count">
+  <span class="todo-count">
     <strong>{{ counter }}</strong>
     {{ suffix }}
-  </p>
+  </span>
 </template>
 
 <script lang="ts">
