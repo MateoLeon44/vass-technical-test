@@ -17,13 +17,17 @@
 import Vue from "vue";
 import TodoRender from "@/components/base/Todo/TodoRender.vue";
 import Todo from "@/types/Todo.class";
-import { vuexTypes } from "../../store/vuex.types";
+import { vuexTypes } from "@/store/vuex.types";
 
 export default Vue.extend({
   components: { TodoRender },
   computed: {
     todos(): Todo[] {
-      return this.$store.getters.getTodos;
+      const activeTodos =
+        this.$store.getters.getActiveTodos.length > 0
+          ? this.$store.getters.getActiveTodos
+          : [];
+      return activeTodos;
     },
     areChecked: {
       get() {

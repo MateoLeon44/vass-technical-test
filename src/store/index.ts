@@ -29,19 +29,11 @@ export default new Vuex.Store<State>({
     getEditedTodo(state): EditedTodo {
       return state.editedTodo;
     },
-    getActiveTodos(state): number {
-      let counter = 0;
-      for (const todo of state.todos) {
-        if (!todo.isChecked) counter += 1;
-      }
-      return counter;
+    getActiveTodos(state): Todo[] {
+      return state.todos.filter((todo: Todo) => !todo.isChecked);
     },
-    getCompletedTodos(state): number {
-      let counter = 0;
-      for (const todo of state.todos) {
-        if (todo.isChecked) counter += 1;
-      }
-      return counter;
+    getCompletedTodos(state): Todo[] {
+      return state.todos.filter((todo: Todo) => todo.isChecked);
     },
   },
   mutations: {
@@ -49,19 +41,17 @@ export default new Vuex.Store<State>({
       state.todos.push(todo);
     },
     [vuexTypes.CLEAR_ACTIVE_TODOS](state: State) {
-      for (let i = 0; i < state.todos.length; i++) {
-        const todo: Todo = state.todos[i];
-        if (todo.isChecked) state.todos.splice(i, 1);
-      }
+      state.todos = state.todos.filter((todo: Todo) => !todo.isChecked);
     },
     [vuexTypes.TOGGLE_TODO_CHECK](state: State, index: number) {
       const todo: Todo = state.todos[index];
       todo.isChecked = !todo.isChecked;
     },
     [vuexTypes.TOGGLE_ALL_TODO](state: State, toggleType: boolean) {
-      for (const todo of state.todos) {
+      state.todos = state.todos.map((todo: Todo) => {
         todo.isChecked = toggleType;
-      }
+        return todo;
+      });
     },
     [vuexTypes.CHANGE_EDITED_TODO](state: State, todoIndex: number) {
       const todo: Todo = state.todos[todoIndex];

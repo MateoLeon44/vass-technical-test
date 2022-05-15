@@ -1,24 +1,33 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import TodosList from "@/components/todos/TodosList.vue";
+import TodosActive from "@/components/todos/active/TodosActive.vue";
+import TodosCompleted from "@/components/todos/completed/TodosCompleted.vue";
 
 Vue.use(VueRouter);
 
+export enum Routes {
+  all = "/",
+  active = "/active",
+  completed = "/completed",
+}
+
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
+    path: Routes.all,
     name: "all",
     component: TodosList,
   },
-  /*   {
-    path: "/active",
+  {
+    path: Routes.active,
     name: "active",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import( "../views/AboutView.vue"),
-  }, */
+    component: TodosActive,
+  },
+  {
+    path: Routes.completed,
+    name: "completed",
+    component: TodosCompleted,
+  },
 ];
 
 const router = new VueRouter({
