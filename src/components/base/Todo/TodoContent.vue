@@ -1,5 +1,5 @@
 <template>
-  <label :for="forId">
+  <label :for="forId" @dblclick="editTodo($event)">
     {{ content }}
   </label>
 </template>
@@ -16,6 +16,12 @@ export default Vue.extend({
     content: {
       type: String,
       required: true,
+    },
+  },
+  methods: {
+    editTodo: function (event: any) {
+      event.stopPropagation();
+      event.preventDefault();
     },
   },
 });
