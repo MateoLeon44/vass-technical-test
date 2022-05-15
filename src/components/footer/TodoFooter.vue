@@ -1,10 +1,6 @@
 <template>
   <footer class="footer">
-    <FooterCounter
-      v-if="currentRoute === possibleRoutes.all"
-      :counter="countActiveTodos"
-      :suffix="countTodosSuffix"
-    />
+    <FooterCounter :counter="countActiveTodos" :suffix="countTodosSuffix" />
     <div class="filters">
       <li>
         <a @click="changeRouter(possibleRoutes.all)">All</a>
