@@ -7,11 +7,13 @@ Vue.use(Vuex);
 
 export interface State {
   todos: Todo[];
+  editedTodo: Todo;
 }
 
 export default new Vuex.Store<State>({
   state: {
     todos: [],
+    editedTodo: new Todo(""),
   },
   getters: {
     getTodos(state): Todo[] {
