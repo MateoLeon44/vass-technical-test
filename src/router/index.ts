@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Main from "@/components/main/Main.vue";
+import TodosList from "@/components/Todos/TodosList.vue";
 
 Vue.use(VueRouter);
 
@@ -8,7 +8,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "all",
-    component: Main,
+    component: TodosList,
   },
   /*   {
     path: "/active",
