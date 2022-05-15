@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import TodoRender from "@/components/shared/TodoRender.vue";
+import TodoRender from "@/components/base/Todo/TodoRender.vue";
 import Todo from "@/types/Todo.class";
 
 export default Vue.extend({
