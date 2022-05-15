@@ -1,17 +1,12 @@
 <template>
   <div class="todo-list">
     <div v-for="(todo, index) in todos" :key="index">
-      <li :class="{ completed: todo.isChecked }">
-        <input
-          type="checkbox"
-          :class="{
-            toggle: todo.isChecked,
-            hidden: !todo.isChecked,
-          }"
-          v-model="todo.isChecked"
-          :id="index"
-        />
-        <TodoContent :content="todo.content" :forId="index" />
+      <li v-if="editedTodo.index === index" class="editing">
+        <EditTodoInput />
+      </li>
+      <li v-else :class="{ completed: todo.isChecked }">
+        <TodoCheckbox :id="index" :todo="todo" />
+        <TodoContent :content="todo.content" :id="index" />
       </li>
     </div>
   </div>
@@ -21,6 +16,9 @@
 import Vue, { PropType } from "vue";
 import Todo from "@/types/Todo.class";
 import TodoContent from "@/components/base/Todo/TodoContent.vue";
+import EditTodoInput from "@/components/todos/EditTodoInput.vue";
+import EditedTodo from "@/types/EditedTodo.class";
+import TodoCheckbox from "@/components/todos/TodoCheckbox.vue";
 
 export default Vue.extend({
   props: {
@@ -29,7 +27,12 @@ export default Vue.extend({
       required: true,
     },
   },
-  components: { TodoContent },
+  components: { TodoContent, EditTodoInput, TodoCheckbox },
+  computed: {
+    editedTodo(): EditedTodo {
+      return this.$store.getters.getEditedTodo;
+    },
+  },
 });
 </script>
 
