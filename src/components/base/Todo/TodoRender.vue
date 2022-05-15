@@ -1,7 +1,15 @@
 <template>
   <div class="todo-list">
     <div v-for="(todo, index) in todos" :key="index">
-      <li :class="{ completed: todo.isChecked }">
+      <li v-if="editedTodo.index === index" class="editing">
+        <input
+          class="edit"
+          v-model="editedTodo.todo.content"
+          v-on:keyup.enter="editTodo"
+          v-on:blur="editTodo"
+        />
+      </li>
+      <li v-else :class="{ completed: todo.isChecked }">
         <input
           type="checkbox"
           :class="{
@@ -11,7 +19,7 @@
           v-model="todo.isChecked"
           :id="index"
         />
-        <TodoContent :content="todo.content" :forId="index" />
+        <TodoContent :content="todo.content" :id="index" />
       </li>
     </div>
   </div>
@@ -21,6 +29,8 @@
 import Vue, { PropType } from "vue";
 import Todo from "@/types/Todo.class";
 import TodoContent from "@/components/base/Todo/TodoContent.vue";
+import EditedTodo from "@/types/EditedTodo.class";
+import { vuexTypes } from "@/store/vuex.types";
 
 export default Vue.extend({
   props: {
@@ -30,6 +40,16 @@ export default Vue.extend({
     },
   },
   components: { TodoContent },
+  methods: {
+    editTodo: function () {
+      this.$store.dispatch(vuexTypes.EDIT_TODO);
+    },
+  },
+  computed: {
+    editedTodo(): EditedTodo {
+      return this.$store.getters.getEditedTodo;
+    },
+  },
 });
 </script>
 
