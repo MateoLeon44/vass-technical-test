@@ -1,17 +1,20 @@
+import { vuexTypes } from "@/store/vuex.types";
+import EditedTodo from "@/types/EditedTodo.class";
 import Todo from "@/types/Todo.class";
 import Vue from "vue";
 import Vuex from "vuex";
-import { vuexTypes } from "@/store/vuex.types";
 
 Vue.use(Vuex);
 
-export interface State {
+interface State {
   todos: Todo[];
+  editedTodo: EditedTodo;
 }
 
 export default new Vuex.Store<State>({
   state: {
     todos: [],
+    editedTodo: new EditedTodo(),
   },
   getters: {
     getTodos(state): Todo[] {
@@ -22,6 +25,9 @@ export default new Vuex.Store<State>({
         if (!todo.isChecked) return false;
       }
       return true;
+    },
+    getEditedTodo(state): EditedTodo {
+      return state.editedTodo;
     },
   },
   mutations: {
@@ -62,6 +68,12 @@ export default new Vuex.Store<State>({
     },
     [vuexTypes.TOGGLE_ALL_TODO](context, toggleType: boolean) {
       context.commit(vuexTypes.TOGGLE_ALL_TODO, toggleType);
+    },
+    [vuexTypes.CHANGE_EDITED_TODO](context, todoIndex: number) {
+      context.commit(vuexTypes.CHANGE_EDITED_TODO, todoIndex);
+    },
+    [vuexTypes.EDIT_TODO](context) {
+      context.commit(vuexTypes.EDIT_TODO);
     },
   },
 });
