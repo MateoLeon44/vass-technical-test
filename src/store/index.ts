@@ -45,6 +45,9 @@ export const mutations = {
     state.todos.splice(editedTodo.index, 1, editedTodo.todo);
     state.editedTodo = new EditedTodo();
   },
+  [vuexTypes.DELETE_TODO](state: State, index: number) {
+    state.todos.splice(index, 1);
+  },
 };
 
 export const getters = {
@@ -94,6 +97,9 @@ export default new Vuex.Store<State>({
     },
     [vuexTypes.CLEAR_COMPELTED_TODOS](context) {
       context.commit(vuexTypes.CLEAR_COMPELTED_TODOS);
+    },
+    [vuexTypes.DELETE_TODO](context, index: number) {
+      context.commit(vuexTypes.DELETE_TODO, index);
     },
   },
 });

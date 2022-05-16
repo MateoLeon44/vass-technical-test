@@ -7,6 +7,7 @@
       <li v-else :class="{ completed: todo.isChecked }">
         <TodoCheckbox :id="index" :todo="todo" />
         <TodoContent :content="todo.content" :id="index" />
+        <div class="destroy" @click="deleteTodo(index)"></div>
       </li>
     </div>
   </div>
@@ -19,6 +20,7 @@ import TodoContent from "@/components/base/Todo/TodoContent.vue";
 import EditTodoInput from "@/components/todos/EditTodoInput.vue";
 import EditedTodo from "@/types/EditedTodo.class";
 import TodoCheckbox from "@/components/todos/TodoCheckbox.vue";
+import { vuexTypes } from "@/store/vuex.types";
 
 export default Vue.extend({
   props: {
@@ -31,6 +33,11 @@ export default Vue.extend({
   computed: {
     editedTodo(): EditedTodo {
       return this.$store.getters.getEditedTodo;
+    },
+  },
+  methods: {
+    deleteTodo(index: number) {
+      this.$store.dispatch(vuexTypes.DELETE_TODO, index);
     },
   },
 });
