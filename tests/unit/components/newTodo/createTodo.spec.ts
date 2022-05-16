@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, Wrapper } from "@vue/test-utils";
 import CreateTodo from "@/components/newTodo/CreateTodo.vue";
 
 describe("CreateTodo.vue", () => {
@@ -12,7 +12,11 @@ describe("CreateTodo.vue", () => {
 
   it("Creates todo", () => {
     const todoContent = "";
-    const wrapper = shallowMount(CreateTodo);
+    const wrapper: Wrapper<CreateTodo & { [key: string]: any }> =
+      shallowMount(CreateTodo);
     wrapper.setData({ todoContent });
+
+    wrapper.vm.createTodo();
+    expect(wrapper.vm.$data.todoContent).toEqual("");
   });
 });
