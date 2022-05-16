@@ -3,6 +3,7 @@ import EditedTodo from "@/types/EditedTodo.class";
 import Todo from "@/types/Todo.class";
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -68,6 +69,7 @@ export const getters = {
 };
 
 export default new Vuex.Store<State>({
+  plugins: [createPersistedState()],
   state: {
     todos: [],
     editedTodo: new EditedTodo(),
