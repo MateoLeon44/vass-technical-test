@@ -23,9 +23,6 @@ All tasks are peristed, hence you won't lose progress of current tasks once the 
 Setting all todos as completed tasks:
 ![image](https://user-images.githubusercontent.com/30735098/168646046-dd42dcee-53c8-4ac9-9b96-78003f3091e3.png)
 
-Filtering by active:
-![image](https://user-images.githubusercontent.com/30735098/168646181-27009ce1-3522-412e-8fe0-8e842f0412ec.png)
-
 Filtering by completed:
 ![image](https://user-images.githubusercontent.com/30735098/168646206-0f7d6500-3edd-4e0f-8357-5965594b8663.png)
 
