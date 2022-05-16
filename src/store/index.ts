@@ -6,69 +6,74 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-interface State {
+export interface State {
   todos: Todo[];
   editedTodo: EditedTodo;
 }
+
+export const mutations = {
+  [vuexTypes.ADD_TODO](state: State, todo: Todo) {
+    state.todos.push(todo);
+  },
+  [vuexTypes.CLEAR_COMPELTED_TODOS](state: State) {
+    state.todos = state.todos.filter((todo: Todo) => !todo.isChecked);
+  },
+  [vuexTypes.TOGGLE_TODO_CHECK](state: State, index: number) {
+    const todo: Todo | undefined = state.todos[index];
+    if (!todo) return;
+    todo.isChecked = !todo.isChecked;
+  },
+  [vuexTypes.TOGGLE_ALL_TODO](state: State, toggleType: boolean) {
+    state.todos = state.todos.map((todo: Todo) => {
+      todo.isChecked = toggleType;
+      return todo;
+    });
+  },
+  [vuexTypes.CHANGE_EDITED_TODO](state: State, todoIndex: number) {
+    const todo: Todo = state.todos[todoIndex];
+    state.editedTodo = new EditedTodo(todoIndex, todo);
+  },
+  [vuexTypes.EDIT_TODO](state: State) {
+    const editedTodo: EditedTodo = state.editedTodo;
+    if (editedTodo.index === undefined || editedTodo.index < 0) return;
+    if (!editedTodo.todo.content) {
+      state.todos.splice(editedTodo.index, 1);
+      state.editedTodo = new EditedTodo();
+      return;
+    }
+    state.todos.splice(editedTodo.index, 1, editedTodo.todo);
+    state.editedTodo = new EditedTodo();
+  },
+};
+
+export const getters = {
+  getTodos(state: State): Todo[] {
+    return state.todos;
+  },
+  areAllTodosChecked(state: State): boolean {
+    for (const todo of state.todos) {
+      if (!todo.isChecked) return false;
+    }
+    return true;
+  },
+  getEditedTodo(state: State): EditedTodo {
+    return state.editedTodo;
+  },
+  getActiveTodos(state: State): Todo[] {
+    return state.todos.filter((todo: Todo) => !todo.isChecked);
+  },
+  getCompletedTodos(state: State): Todo[] {
+    return state.todos.filter((todo: Todo) => todo.isChecked);
+  },
+};
 
 export default new Vuex.Store<State>({
   state: {
     todos: [],
     editedTodo: new EditedTodo(),
   },
-  getters: {
-    getTodos(state): Todo[] {
-      return state.todos;
-    },
-    areAllTodosChecked(state): boolean {
-      for (const todo of state.todos) {
-        if (!todo.isChecked) return false;
-      }
-      return true;
-    },
-    getEditedTodo(state): EditedTodo {
-      return state.editedTodo;
-    },
-    getActiveTodos(state): Todo[] {
-      return state.todos.filter((todo: Todo) => !todo.isChecked);
-    },
-    getCompletedTodos(state): Todo[] {
-      return state.todos.filter((todo: Todo) => todo.isChecked);
-    },
-  },
-  mutations: {
-    [vuexTypes.ADD_TODO](state: State, todo: Todo) {
-      state.todos.push(todo);
-    },
-    [vuexTypes.CLEAR_ACTIVE_TODOS](state: State) {
-      state.todos = state.todos.filter((todo: Todo) => !todo.isChecked);
-    },
-    [vuexTypes.TOGGLE_TODO_CHECK](state: State, index: number) {
-      const todo: Todo = state.todos[index];
-      todo.isChecked = !todo.isChecked;
-    },
-    [vuexTypes.TOGGLE_ALL_TODO](state: State, toggleType: boolean) {
-      state.todos = state.todos.map((todo: Todo) => {
-        todo.isChecked = toggleType;
-        return todo;
-      });
-    },
-    [vuexTypes.CHANGE_EDITED_TODO](state: State, todoIndex: number) {
-      const todo: Todo = state.todos[todoIndex];
-      state.editedTodo = new EditedTodo(todoIndex, todo);
-    },
-    [vuexTypes.EDIT_TODO](state: State) {
-      const editedTodo: EditedTodo = state.editedTodo;
-      if (editedTodo.index === undefined || editedTodo.index < 0) return;
-      if (!editedTodo.todo.content) {
-        state.todos.splice(editedTodo.index, 1);
-        state.editedTodo = new EditedTodo();
-        return;
-      }
-      state.todos.splice(editedTodo.index, 1, editedTodo.todo);
-      state.editedTodo = new EditedTodo();
-    },
-  },
+  getters: getters,
+  mutations: mutations,
   actions: {
     [vuexTypes.ADD_TODO](context, todo: Todo) {
       context.commit(vuexTypes.ADD_TODO, todo);
@@ -85,8 +90,8 @@ export default new Vuex.Store<State>({
     [vuexTypes.EDIT_TODO](context) {
       context.commit(vuexTypes.EDIT_TODO);
     },
-    [vuexTypes.CLEAR_ACTIVE_TODOS](context) {
-      context.commit(vuexTypes.CLEAR_ACTIVE_TODOS);
+    [vuexTypes.CLEAR_COMPELTED_TODOS](context) {
+      context.commit(vuexTypes.CLEAR_COMPELTED_TODOS);
     },
   },
 });

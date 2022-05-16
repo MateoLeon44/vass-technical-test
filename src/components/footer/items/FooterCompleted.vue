@@ -9,7 +9,7 @@ import Vue from "vue";
 export default Vue.extend({
   methods: {
     clearCompleted: function (): void {
-      this.$store.dispatch(vuexTypes.CLEAR_ACTIVE_TODOS);
+      this.$store.dispatch(vuexTypes.CLEAR_COMPELTED_TODOS);
     },
   },
 });
